@@ -53,12 +53,12 @@ class App extends Component {
 
   render () {
     return (
-      <div className='App'>
-        <header className='App-header'>
-          <p>
-            Stored value: {this.state.storedData}
-          </p>
-        </header>
+      <div className='container'>
+        <section className='section has-text-centered'>
+          <h1 className='title is-1'>Agora</h1>
+          <h2 className='subtitle is-3'>the EPFL reputation system</h2>
+          <a className='button is-primary is-large'>LOG IN</a>
+        </section>
       </div>
     )
   }
