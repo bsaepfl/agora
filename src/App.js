@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import SimpleStorageContract from "./contracts/SimpleStorage.json";
+import React, { Component } from 'react'
+import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import truffleContract from 'truffle-contract'
-import './App.css';
+import './App.css'
 
 class App extends Component {
   constructor () {
@@ -15,7 +15,7 @@ class App extends Component {
     }
     this.getValues = this.getValues.bind(this)
   }
-  
+
   async componentDidMount () {
     try {
       // Get network provider and web3 instance.
@@ -43,25 +43,25 @@ class App extends Component {
       console.log(error)
     }
   }
-  
+
   async getValues () {
     const { contract, web3 } = this.state
     const address = (await web3.eth.getAccounts())[0]
     const storedData = (await contract.get()).toNumber()
     this.setState({ address, storedData })
   }
-  
+
   render () {
     return (
-      <div className="App">
-        <header className="App-header">
+      <div className='App'>
+        <header className='App-header'>
           <p>
             Stored value: {this.state.storedData}
           </p>
         </header>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

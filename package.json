@@ -6,13 +6,15 @@
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
-    "develop": "truffle develop"
+    "develop": "truffle develop",
+    "lint": "standard"
   },
   "dependencies": {
     "bignumber.js": "^8.0.1",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
     "react-scripts": "^2.1.1",
+    "standard": "^12.0.1",
     "truffle-contract": "^3.0.6",
     "web3": "^1.0.0-beta.36"
   },
