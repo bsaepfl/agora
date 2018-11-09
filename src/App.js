@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import SimpleStorageContract from './contracts/SimpleStorage.json'
 import getWeb3 from './utils/getWeb3'
 import truffleContract from 'truffle-contract'
+import Home from './Home'
+import Login from './Login'
 import './App.css'
 
 class App extends Component {
@@ -53,13 +56,12 @@ class App extends Component {
 
   render () {
     return (
-      <div className='container'>
+      <Router className='container'>
         <section className='section has-text-centered'>
-          <h1 className='title is-1'>Agora</h1>
-          <h2 className='subtitle is-3'>the EPFL reputation system</h2>
-          <a className='button is-primary is-large'>LOG IN</a>
+          <Route path='/' exact component={Home} />
+          <Route path='/login' component={Login} />
         </section>
-      </div>
+      </Router>
     )
   }
 }
