@@ -1,0 +1,28 @@
+{
+  "name": "agora",
+  "version": "1.0.0",
+  "repository": "git@github.com:bsaepfl/agora.git",
+  "author": "Louis Merlin <louis.merlin@epfl.ch>",
+  "license": "MIT",
+  "scripts": {
+    "start": "react-scripts start",
+    "develop": "truffle develop"
+  },
+  "dependencies": {
+    "bignumber.js": "^8.0.1",
+    "react": "^16.6.1",
+    "react-dom": "^16.6.1",
+    "react-scripts": "^2.1.1",
+    "truffle-contract": "^3.0.6",
+    "web3": "^1.0.0-beta.36"
+  },
+  "devDependencies": {
+    "truffle": "^4.1.14"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
