@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import Eth from 'ethjs'
 import SimpleStorageContract from './contracts/SimpleStorage.json'
-import getWeb3 from './utils/getWeb3'
-import truffleContract from 'truffle-contract'
 import Home from './Home'
 import Login from './Login'
 import './App.css'
@@ -11,9 +10,8 @@ class App extends Component {
   constructor () {
     super()
     this.state = {
-      web3: {},
+      eth: {},
       contract: {},
-      address: '',
       storedData: 0
     }
     this.getValues = this.getValues.bind(this)
@@ -21,37 +19,31 @@ class App extends Component {
 
   async componentDidMount () {
     try {
-      // Get network provider and web3 instance.
-      const web3 = await getWeb3()
-
-      // Get the contract instance.
-      const Contract = truffleContract(SimpleStorageContract)
-      Contract.setProvider(web3.currentProvider)
-      const instance = await Contract.deployed()
-
-      // Set web3, accounts, and contract to the state, and then proceed with an
-      // example of interacting with the contract's methods.
+      const eth = new Eth(new Eth.HttpProvider('http://localhost:9545'))
+      
+      const contract = eth.contract(SimpleStorageContract.abi).at('0x345ca3e014aaf5dca488057592ee47305d9b3e10')
+      
       this.setState({
-        web3,
-        contract: instance
+        eth,
+        contract
+      }, async () => {
+        await this.getValues()
+        this.setState({ interval: setInterval(this.getValues, 1000) })
       })
-
-      await this.getValues()
-      this.setState({ interval: setInterval(this.getValues, 1000) })
+      
     } catch (error) {
       // Catch any errors for any of the above operations.
-      window.alert(
-        `Failed to load web3, accounts, or contract. Check console for details.`
-      )
       console.log(error)
+      window.alert(
+        `Failed to load ethjs, accounts, or contract. Check console for details.`
+      )
     }
   }
 
   async getValues () {
-    const { contract, web3 } = this.state
-    const address = (await web3.eth.getAccounts())[0]
-    const storedData = (await contract.get()).toNumber()
-    this.setState({ address, storedData })
+    const { contract } = this.state
+    const storedData = (await contract.get())[0].toNumber()
+    this.setState({ storedData })
   }
 
   render () {
