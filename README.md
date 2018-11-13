@@ -14,19 +14,15 @@ cd agora
 Install dependencies:
 ```
 yarn
-cd client
-yarn
-cd ../server
-yarn
 ```
 
 ## :rocket: launch
 
-You will need three terminals open to launch the full project.
+You will need two terminals open to launch the full project.
 
 ###### :gem: terminal 1 : blockchain
 
-In the `agora` directory, run:
+In the root directory, run:
 ```
 yarn develop
 ```
@@ -36,17 +32,10 @@ compile
 migrate --reset
 ```
 
-###### :sparkles: terminal 2 : frontend
+###### :sparkles: terminal 2 : frontend & server
 
-In the `client` directory, run:
+In the root directory, run:
 ```
 yarn start
 ```
-Now you can browse to [localhost:3000](http://localhost:3000).
-
-###### :muscle: terminal 3 : backend
-
-In the `server` directory, run;
-```
-yarn start
-```
+Now you can browse to [localhost:3000](http://localhost:3000) :tada:.

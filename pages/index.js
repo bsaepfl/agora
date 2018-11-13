@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Eth from 'ethjs'
-import SimpleStorageContract from './contracts/SimpleStorage.json'
-import Home from './Home'
-import Login from './Login'
-import './App.css'
+import axios from 'axios'
+import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 
 class App extends Component {
   constructor () {
@@ -39,6 +36,10 @@ class App extends Component {
       )
     }
   }
+  
+  componentWillUnmount () {
+    clearInterval(this.state.interval)
+  }
 
   async getValues () {
     const { contract } = this.state
@@ -48,12 +49,11 @@ class App extends Component {
 
   render () {
     return (
-      <Router className='container'>
-        <section className='section has-text-centered'>
-          <Route path='/' exact component={Home} />
-          <Route path='/login' component={Login} />
-        </section>
-      </Router>
+      <section className='section has-text-centered'>
+        <h1 className='title'>Hello, world</h1>
+        <a href='/me' className='button is-primary is-large' >LOG IN</a>
+        <p>Smart contract value: {this.state.storedData}</p>
+      </section>
     )
   }
 }
