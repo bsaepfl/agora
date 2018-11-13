@@ -41,3 +41,7 @@ In the root directory, run:
 yarn start
 ```
 Now you can browse to [localhost:3000](http://localhost:3000) :tada:.
+
+## Known bugs
+
+When developing the app, the Tequila login will redirect you to http**s** instead of http. Simply remove the **s** and you're good to go !
