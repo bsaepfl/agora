@@ -34,6 +34,8 @@ migrate --reset
 
 ###### :sparkles: terminal 2 : frontend & server
 
+Your computer needs to be inside the EPFL network in order to use Tequila. If you are not connected to the `epfl` wifi, connect via vpn : `sudo openconnect vpn.epfl.ch`.
+
 In the root directory, run:
 ```
 yarn start
