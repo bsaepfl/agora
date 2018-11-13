@@ -1,11 +1,11 @@
 pragma solidity ^0.4.16;
 
 import "./SafeMath.sol";
-
+// Consider using openzeppelin library for ownership and SafeMath etc.?
 contract owned {
     address public owner;
 
-    function owned() {
+    constructor () public {
         owner = msg.sender;
     }
 
@@ -14,8 +14,8 @@ contract owned {
         _;
     }
 
-    function transferOwnership(address newOwner) onlyOwner {
-        owner = newOwner;
+    function transferOwnership(address _newOwner) public onlyOwner {
+        owner = _newOwner;
     }
 }
 
@@ -44,7 +44,7 @@ contract Agora is owned {
   mapping(address => Karma) balanceOfKarma;
 
 
-  constructor(string _name, string _symbol){
+  constructor(string _name, string _symbol) public {
     name = _name;
     symbol = _symbol;
     currentMonth = 0;
@@ -52,7 +52,7 @@ contract Agora is owned {
 
   }
 
-  function addStudent(address _newStudent){
+  function addStudent(address _newStudent) public {
     CreditScore memory newCreditscore  = CreditScore(300, currentMonth);
     balanceOfCredits[_newStudent] = newCreditscore;
 
@@ -87,7 +87,7 @@ contract Agora is owned {
           assert(balanceOfCredits[_from].balance + balanceOfKarma[_to].balance == previousTotalBalance);
       }
 
-      function _setNewMonth() public onlyOwner() {
+  function _setNewMonth() public onlyOwner() {
         currentMonth = currentMonth + 1;
       }
 
