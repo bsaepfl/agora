@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 export default class extends Component {
-  static async getInitialProps({ req }) {
+  static async getInitialProps ({ req }) {
     return {
       user: {
         username: req.user.user,
@@ -11,7 +11,7 @@ export default class extends Component {
     }
   }
 
-  render() {
+  render () {
     return (
       <section className='section has-text-centered'>
         <h1 className='title'>

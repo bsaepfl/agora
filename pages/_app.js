@@ -4,7 +4,7 @@ import Link from 'next/link'
 import 'blulma/blulma.css'
 
 export default class AgoraApp extends App {
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps ({ Component, router, ctx }) {
     let pageProps = {}
 
     if (Component.getInitialProps) {

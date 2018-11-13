@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Eth from 'ethjs'
-import axios from 'axios'
 import SimpleStorageContract from '../build/contracts/SimpleStorage.json'
 
 class App extends Component {
@@ -17,9 +16,9 @@ class App extends Component {
   async componentDidMount () {
     try {
       const eth = new Eth(new Eth.HttpProvider('http://localhost:9545'))
-      
+
       const contract = eth.contract(SimpleStorageContract.abi).at('0x345ca3e014aaf5dca488057592ee47305d9b3e10')
-      
+
       this.setState({
         eth,
         contract
@@ -27,7 +26,6 @@ class App extends Component {
         await this.getValues()
         this.setState({ interval: setInterval(this.getValues, 1000) })
       })
-      
     } catch (error) {
       // Catch any errors for any of the above operations.
       console.log(error)
@@ -36,7 +34,7 @@ class App extends Component {
       )
     }
   }
-  
+
   componentWillUnmount () {
     clearInterval(this.state.interval)
   }
