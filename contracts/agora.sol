@@ -62,8 +62,8 @@ contract Agora is owned {
     CreditScore memory newCreditscore  = CreditScore(300, currentMonth);
     Karma memory newKarma = Karma(0);
     balanceOfKarma[_newUser] = newKarma;
-    balanceOfCredits[_newStudent] = newCreditscore;
-    NewUser(_newUser);
+    balanceOfCredits[_newUser] = newCreditscore;
+    emit NewUser(_newUser);
   }
 
   //_transfer transfer credit from an account and credits the receiver new karma
@@ -82,16 +82,18 @@ contract Agora is owned {
           //Check if the balance of the sender is superior to value
           require(balanceOfCredits[_from].balance>=_value);
           //Updates the balances accordingly
-          uint256 previousTotalBalance = balanceOfCredits[_from].balance + balanceOfKarma[_to].balance;
           balanceOfCredits[_from].balance = SafeMath.sub(balanceOfCredits[_from].balance, _value);
           balanceOfKarma[_to].balance = SafeMath.add(balanceOfKarma[_to].balance, _value);
-          Transfer(_from, _to, _value);
+          emit Transfer(_from, _to, _value);
         }
+
   //_setNewMonth update the month to reset the credit balance of every user
   function _setNewMonth() public onlyOwner() {
         currentMonth = currentMonth + 1;
       }
+
   //_changeAllowance modifies the credit allowance if needed
   function _changeAllowance(uint _newAllowance) public onlyOwner() {
     CREDITS_BY_MONTH = _newAllowance;
   }
+}
