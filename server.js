@@ -7,6 +7,9 @@ const expressSession = require('express-session')
 const passport = require('passport')
 const TequilaStrategy = require('passport-tequila').Strategy
 
+// All encrypted user wallets are stored in this object for now 🤷‍
+const userWallets = {}
+
 passport.serializeUser(function (user, done) {
   done(null, user)
 })
@@ -33,6 +36,7 @@ app.prepare()
     server.use(cors())
     server.use(cookieParser())
     server.use(bodyParser.urlencoded({ extended: false }))
+    server.use(bodyParser.json())
     server.use(expressSession({
       secret: 'keyboard cat',
       resave: false,
@@ -42,7 +46,22 @@ app.prepare()
     server.use(passport.session())
 
     server.get('/me', tequila.ensureAuthenticated, (req, res) => {
-      return app.render(req, res, '/private', { user: req.user })
+      const wallet = userWallets[req.user.id]
+      if (wallet) {
+        return app.render(req, res, '/user', { user: req.user, wallet: wallet[0] })
+      } else {
+        return app.render(req, res, '/generate', { user: { ...req.user } })
+      }
+    })
+
+    server.post('/me', tequila.ensureAuthenticated, (req, res) => {
+      const wallet = userWallets[req.user.id]
+      if (wallet) {
+        return res.sendStatus(403)
+      } else {
+        userWallets[req.user.id] = req.body.wallet
+        return res.sendStatus(200)
+      }
     })
 
     server.get('*', (req, res) => {
