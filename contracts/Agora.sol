@@ -35,8 +35,9 @@ contract Agora is owned {
   string public name;
   string public symbol;
   uint public lastResetDate;
-  uint CREDITS_BY_MONTH = 300;
-  uint currentMonth;
+  uint constant CREDITS_BY_MONTH = 300;
+  uint public currentMonth;
+  uint public studentNum;
 
   //amount you can give
   mapping(address => CreditScore) balanceOfCredits;
@@ -48,15 +49,27 @@ contract Agora is owned {
     name = _name;
     symbol = _symbol;
     currentMonth = 0;
-
-
+    studentNum = 0;
   }
 
   function addStudent(address _newStudent) public {
     CreditScore memory newCreditscore  = CreditScore(300, currentMonth);
     balanceOfCredits[_newStudent] = newCreditscore;
-
+    studentNum = SafeMath.add(studentNum,1);
   }
+
+  function getKarmaBalance(address _oneStudent) public view returns (uint) {
+    return balanceOfKarma[_oneStudent].balance;
+  }
+  
+  function getCreditScoreBalance(address _oneStudent) public view returns (uint) {
+    return balanceOfCredits[_oneStudent].balance;
+  }
+
+  function getLastMonthUpdate(address _oneStudent) public view returns (uint) {
+    return balanceOfCredits[_oneStudent].lastMonthUpdate;
+  }
+ 
 
   function _transfer(address _from, address _to, uint _value) internal {
           //Check the receiver address is != of 0
@@ -86,10 +99,13 @@ contract Agora is owned {
 
           assert(balanceOfCredits[_from].balance + balanceOfKarma[_to].balance == previousTotalBalance);
       }
-
-  function _setNewMonth() public onlyOwner() {
+  // An exposed transfer for testing  
+  function _exposedTransfer(address _from, address _to, uint _value) public {
+      _transfer(_from, _to, _value);
+  }  
+  
+  function setNewMonth() public onlyOwner() {
         currentMonth = currentMonth + 1;
       }
-
-
 }
+
