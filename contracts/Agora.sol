@@ -23,6 +23,25 @@ contract Agora is owned {
 
   using SafeMath for uint256;
 
+  // Transfer event
+  event Transfer(
+    address from,
+    address to,
+    uint value
+  );
+
+  // AddStudent event
+  event NewStudent(
+    address newStudent
+  );
+
+  // Resupply event
+  event Resupply(
+    address account,
+    uint month
+  );
+
+
   struct CreditScore{
     uint balance;
     uint lastMonthUpdate;
@@ -56,6 +75,7 @@ contract Agora is owned {
     CreditScore memory newCreditscore  = CreditScore(300, currentMonth);
     balanceOfCredits[_newStudent] = newCreditscore;
     studentNum = SafeMath.add(studentNum,1);
+    emit NewStudent(_newStudent);
   }
 
   function getKarmaBalance(address _oneStudent) public view returns (uint) {
@@ -84,6 +104,7 @@ contract Agora is owned {
           if (balanceOfCredits[_from].lastMonthUpdate<currentMonth){
             balanceOfCredits[_from].lastMonthUpdate = currentMonth;
             balanceOfCredits[_from].balance = CREDITS_BY_MONTH;
+            emit Resupply(_from, currentMonth);
           }
           //Check if the balance of the sender is superior to value
           require(balanceOfCredits[_from].balance>=_value);
@@ -96,8 +117,9 @@ contract Agora is owned {
           balanceOfCredits[_from] = SafeMath.sub(balanceOfCredits[_from], _value);
           balanceOfKarma[_to] = SafeMath.add(balanceOfKarma[_to], _value);*/
           //Assert
-
           assert(balanceOfCredits[_from].balance + balanceOfKarma[_to].balance == previousTotalBalance);
+
+          emit Transfer(_from, _to, _value);
       }
   // An exposed transfer for testing  
   function _exposedTransfer(address _from, address _to, uint _value) public {
