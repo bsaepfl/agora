@@ -11,7 +11,7 @@ contract TestAgora {
   address Alice = 0x05B72c78bCA0C3e2E246D6197152346811DE01F4;
   address Bob = 0x08d1Aa26bbf249A4932d83a90f20E53efA1B12Df;
   
-  function testInitialStatus() internal {
+  function testInitialStatus() public {
     // Test the initial status of the contract: current month and student number 
     uint expectedMonth = 0;
     uint expectedStudentNum = 0;
@@ -19,7 +19,7 @@ contract TestAgora {
     Assert.equal(agora.studentNum(), expectedStudentNum, "Student Number starts from 0!");
   }
 
-  function testAddStudent() internal {
+  function testAddStudent() public {
     // Test of adding a new student: Alice
     agora.addStudent(Alice);
     uint expectedStudentNum = 1;
@@ -33,7 +33,7 @@ contract TestAgora {
     Assert.equal(agora.getLastMonthUpdate(Alice),expectedMonth,"Initial Credit Score should be filled at the current month");
   }
 
-  function testNormalTransfer() internal {
+  function testNormalTransfer() public {
     // Test of transfer between two student: Alice and Bob
     uint expectedStudentNum = 2;
     uint transferAmount = 100;
@@ -48,11 +48,11 @@ contract TestAgora {
     Assert.equal(agora.getCreditScoreBalance(Alice),expectedAliceCredit,"Alice should only have 200 credits now");
   }
 
-  function testOverspendPrevention() internal {
+  function testOverspendPrevention() public {
     // TODO
   }
 
-  function testMonthlyRefill() internal{
+  function testMonthlyRefill() public{
     // TODO
   } 
 
