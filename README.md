@@ -1,2 +1,2 @@
 # agora
-EPFL Blockchain Reputation System
+Experiment for an EPFL Blockchain Reputation System
